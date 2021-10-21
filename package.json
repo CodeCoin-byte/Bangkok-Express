@@ -1,0 +1,29 @@
+{
+  "name": "bangkok_express",
+  "version": "1.0.0",
+  "description": "online food sales store",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Alexander-Granovski/Bangkok-Express.git"
+  },
+  "keywords": [
+    "html",
+    "javascript",
+    "css"
+  ],
+  "author": "Alexander Granovski",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Alexander-Granovski/Bangkok-Express/issues"
+  },
+  "homepage": "https://github.com/Alexander-Granovski/Bangkok-Express#readme",
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.25.2"
+  }
+}

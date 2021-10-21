@@ -3,7 +3,7 @@ function createElement(html) {
   const div = document.createElement('div');
   div.innerHTML = html;
   return div.firstElementChild;
-};
+}
 
 const escapeHtml = (string) => Array.from(string).map(char => {
   switch(char) {

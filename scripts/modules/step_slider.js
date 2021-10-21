@@ -112,9 +112,6 @@ export default class StepSlider {
         });
         if (!e.target.closest('.slider')) {
           const steps = elements.length - 1;
-          const offsetContainer = this.elem.getBoundingClientRect().left;
-          const clickX = e.clientX - offsetContainer;
-          const leftRelative = clickX / this.elem.offsetWidth;
           const sliderThumb = document.querySelector('.slider__thumb');
           const sliderProgress = document.querySelector('.slider__progress');
           sliderThumb.style.left = `${this.value / steps * 100}%`;

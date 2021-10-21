@@ -4,9 +4,9 @@ import { escapeHtml } from '../libs/custom_libs.js';
 import Modal from './modal.js';
 
 export default class Cart {
-  cartItems = []; // [product: {...}, count: N]
-
+  
   constructor(cartIcon) {
+    this.cartItems = []; // [product: {...}, count: N]
     this.cartIcon = cartIcon;
 
     this.addEventListeners();
@@ -168,7 +168,7 @@ export default class Cart {
     btnSubmit.classList.add('is-loading');
     const cartForm = document.querySelector('.cart-form');
     const formData = new FormData(cartForm);
-    const promise = fetch('https://httpbin.org/post', {
+    fetch('https://httpbin.org/post', {
       method: 'POST',
       body: formData,
     }).then((result) => {
