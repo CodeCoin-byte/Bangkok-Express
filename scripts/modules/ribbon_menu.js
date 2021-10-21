@@ -8,7 +8,7 @@ export default class RibbonMenu {
   createBtn(direction) {
     const template = `
     <button class="ribbon__arrow ribbon__arrow_${direction}">
-      <img src="/assets/images/icons/angle-icon.svg" alt="icon">
+      <img src="./assets/images/icons/angle-icon.svg" alt="icon">
     </button>
     `;
     const elementBtn = createElement(template);
