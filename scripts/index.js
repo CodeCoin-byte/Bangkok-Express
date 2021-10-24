@@ -32,7 +32,6 @@ export default class Main {
     ribbonMenuContainer.append(ribbonMenu.elem);
     stepSliderContainer.append(stepSlider.elem);
     cartIconContainer.append(cartIcon.elem);
-    productsContainer.innerHTML = '';
 
     await fetch('./scripts/templates/products.json').then((response) => {
       return response.json();
@@ -48,6 +47,7 @@ export default class Main {
       maxSpiciness: stepSlider.value,
       category: ribbonMenu.value,
     });
+
     document.body.addEventListener('product-add', (e) => {
       const productId = e.detail;
       this.products.forEach(element => {
@@ -56,6 +56,7 @@ export default class Main {
         }
       });
     });
+
     stepSliderContainer.addEventListener('slider-change', (e) => {
       this.productsGrid.updateFilter({
         maxSpiciness: e.detail,
@@ -67,6 +68,7 @@ export default class Main {
         category: e.detail,
       });
     });
+
     document.addEventListener('change', (e) => {
       const obj = {};
       const targetId = e.target.id;

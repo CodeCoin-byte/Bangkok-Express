@@ -11,12 +11,12 @@ export default class Carousel {
     const name = slideOptions.name;
     const template = `
     <div class="carousel__slide" data-id="${id}">
-        <img src="/assets/images/carousel/${image}" class="carousel__img" alt="slide">
+        <img src="./assets/images/carousel/${image}" class="carousel__img" alt="slide">
         <div class="carousel__caption">
           <span class="carousel__price">€${price}</span>
           <div class="carousel__title">${name}</div>
           <button type="button" class="carousel__button">
-            <img src="/assets/images/icons/plus-icon.svg" alt="icon">
+            <img src="./assets/images/icons/plus-icon.svg" alt="icon">
           </button>
         </div>
       </div>
@@ -36,12 +36,12 @@ export default class Carousel {
   createControls() {
     const templateRight = `
     <div class="carousel__arrow carousel__arrow_right">
-      <img src="/assets/images/icons/angle-icon.svg" alt="icon">
+      <img src="./assets/images/icons/angle-icon.svg" alt="icon">
     </div>
     `;
     const templateLeft = `
     <div class="carousel__arrow carousel__arrow_left">
-      <img src="/assets/images/icons/angle-left-icon.svg" alt="icon">
+      <img src="./assets/images/icons/angle-left-icon.svg" alt="icon">
     </div>
     `;
     const container = document.createDocumentFragment();

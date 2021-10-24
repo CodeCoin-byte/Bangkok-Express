@@ -8,7 +8,7 @@ export default class RibbonMenu {
   createBtn(direction) {
     const template = `
     <button class="ribbon__arrow ribbon__arrow_${direction}">
-      <img src="/assets/images/icons/angle-icon.svg" alt="icon">
+      <img src="./assets/images/icons/angle-icon.svg" alt="icon">
     </button>
     `;
     const elementBtn = createElement(template);
@@ -47,6 +47,7 @@ export default class RibbonMenu {
 
     };
     this.elem.addEventListener('click', (e) => {
+      console.log(this.elem)
       if (e.target.closest('.ribbon__arrow_right')) {
         containerLinks.scrollBy(350, 0);
       }
