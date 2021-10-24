@@ -31,12 +31,13 @@ export default class ProductCard {
   productAdd(elem, id) {
     elem.addEventListener('click', (e) => {
       if (e.target.closest('.card__button')) {
-        const eventAdd = new CustomEvent('product-add', {
+        const customEventAdd = new CustomEvent('product-add', {
           detail: id,
           bubbles: true,
         });
-        elem.dispatchEvent(eventAdd);
+        elem.dispatchEvent(customEventAdd);
       }
+      return;
     });
   }
 }

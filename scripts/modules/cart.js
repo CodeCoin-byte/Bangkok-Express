@@ -8,7 +8,6 @@ export default class Cart {
   constructor(cartIcon) {
     this.cartItems = []; // [product: {...}, count: N]
     this.cartIcon = cartIcon;
-
     this.addEventListeners();
   }
 

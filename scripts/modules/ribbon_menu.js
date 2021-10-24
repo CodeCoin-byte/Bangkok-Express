@@ -47,6 +47,7 @@ export default class RibbonMenu {
 
     };
     this.elem.addEventListener('click', (e) => {
+      console.log(this.elem)
       if (e.target.closest('.ribbon__arrow_right')) {
         containerLinks.scrollBy(350, 0);
       }

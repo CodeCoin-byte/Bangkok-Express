@@ -9,7 +9,7 @@ export default class StepSlider {
     this.dragAndDrop();
   }
 
-  
+
   createSlider() {
     const template = `
     <div class="slider">
@@ -37,7 +37,7 @@ export default class StepSlider {
       }
     }
   }
-  
+
   activeStep(elements) {
     for (let i = 0; i < elements.length; i += 1) {
       if (elements[i].classList.contains('slider__step-active')) {
@@ -52,14 +52,17 @@ export default class StepSlider {
   onClick() {
     const elements = this.elem.querySelectorAll('.slider__steps span');
     this.elem.addEventListener('click', (e) => {
+      const sliderValue = document.querySelector('.slider__value');
+      const sliderThumb = document.querySelector('.slider__thumb');
+      const sliderProgress = document.querySelector('.slider__progress');
+      if (e.target.closest('.slider__thumb')) {
+        return;
+      }
       const steps = elements.length - 1;
       const offsetContainer = this.elem.getBoundingClientRect().left;
       const clickX = e.clientX - offsetContainer;
       const leftRelative = clickX / this.elem.offsetWidth;
       this.value = Math.round(leftRelative * steps);
-      const sliderValue = document.querySelector('.slider__value');
-      const sliderThumb = document.querySelector('.slider__thumb');
-      const sliderProgress = document.querySelector('.slider__progress');
       sliderValue.textContent = this.value;
       sliderThumb.style.left = `${this.value / steps * 100}%`;
       sliderProgress.style.width = `${this.value / steps * 100}%`;
@@ -76,8 +79,14 @@ export default class StepSlider {
     const elements = this.elem.querySelectorAll('.slider__steps span');
     const thumb = this.elem.querySelector('.slider__thumb');
     const progress = this.elem.querySelector('.slider__progress');
-    const steps = elements.length - 1;
+    this.steps = elements.length - 1;
+    this.isDrag = false;
     this.elem.addEventListener('pointerdown', (event) => {
+      if (!event.target.closest('.slider__thumb')) {
+        this.isDrag = false;
+        return;
+      }
+      this.isDrag = true;
       const sliderValue = document.querySelector('.slider__value');
       event.preventDefault();
       const coordsContainer = this.elem.getBoundingClientRect();
@@ -86,7 +95,7 @@ export default class StepSlider {
         e.preventDefault();
         const currentPosition = e.clientX - coordsContainer.left;
         const leftRelative = currentPosition / coordsContainer.width;
-        this.value = Math.round(leftRelative * steps);
+        this.value = Math.round(leftRelative * this.steps);
         if (leftRelative < 0 || e.clientX < coordsContainer.left) {
           thumb.style.left = '0%';
           progress.style.width = '0%';
@@ -94,42 +103,34 @@ export default class StepSlider {
         } else if (leftRelative > 1 || e.clientX > coordsContainer.right) {
           thumb.style.left = '100%';
           progress.style.width = '100%';
-          this.value = steps;
+          this.value = this.steps;
         } else {
           thumb.style.left = `${leftRelative * 100}%`;
           progress.style.width = `${leftRelative * 100}%`;
         }
-        this.elem.classList.add('slider_dragging');
+        this.elem.classList.add('slider__dragging');
         sliderValue.textContent = this.value;
       };
 
       document.documentElement.addEventListener('pointermove', move);
-
-      document.documentElement.onpointerup = (e) => {
-        const sliderChange = new CustomEvent('slider-change', {
+      
+      document.documentElement.addEventListener('pointerup', () => {
+        if (!this.isDrag) {
+          return;
+        }
+        const customEventChange = new CustomEvent('slider-change', {
           detail: this.value,
           bubbles: true,
         });
-        if (!e.target.closest('.slider')) {
-          const steps = elements.length - 1;
-          const sliderThumb = document.querySelector('.slider__thumb');
-          const sliderProgress = document.querySelector('.slider__progress');
-          sliderThumb.style.left = `${this.value / steps * 100}%`;
-          sliderProgress.style.width = `${this.value / steps * 100}%`;
-          this.elem.dispatchEvent(sliderChange);
-          this.elem.classList.remove('slider_dragging');
-          document.documentElement.removeEventListener('pointermove', move);
-          thumb.onpointerup = null;
-        } else {
-          this.elem.dispatchEvent(sliderChange);
-          this.elem.classList.remove('slider_dragging');
-          document.documentElement.removeEventListener('pointermove', move);
-          thumb.onpointerup = null;
-        }
+        this.elem.classList.remove('slider__dragging');
+        document.documentElement.removeEventListener('pointermove', move);
+        progress.style.width = `${this.value / this.steps * 100}%`;
+        thumb.style.left = `${this.value / this.steps * 100}%`;
         this.activeStep(elements);
-
-      };
+        this.elem.dispatchEvent(customEventChange);
+      }, { once: true });
     });
+    document.documentElement.onpointerup = null;
 
     this.elem.ondragstart = () => false;
   }
